@@ -364,13 +364,26 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function goHome() {
+  function restoreHomeView() {
     document.getElementById("checkoutSection").classList.remove("open");
     document.getElementById("confirmSection").classList.remove("open");
     document.getElementById("menu").style.display = "";
     document.getElementById("hoursSection").style.display = "";
     document.querySelector(".hero").style.display = "";
+  }
+
+  function goHome() {
+    restoreHomeView();
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Scrolls to any in-page section without ever touching the URL —
+  // using a real #hash anchor makes the browser jump straight to that
+  // section on every future page refresh, which is not what we want.
+  function goToSection(id) {
+    restoreHomeView();
+    const target = document.getElementById(id);
+    if (target) target.scrollIntoView({ behavior: "smooth" });
   }
 
   function backToMenu() {
@@ -480,11 +493,7 @@
         document.getElementById("lookupOrderId").value = lastOrder.id;
         document.getElementById("lookupPhone").value = lastOrder.phone;
       }
-      document.getElementById("confirmSection").classList.remove("open");
-      document.getElementById("menu").style.display = "";
-      document.getElementById("hoursSection").style.display = "";
-      document.querySelector(".hero").style.display = "";
-      document.getElementById("lookupSection").scrollIntoView({ behavior: "smooth" });
+      goToSection("lookupSection");
     });
   }
 
@@ -552,16 +561,24 @@
     document.getElementById("overlay").addEventListener("click", closeDrawer);
     document.getElementById("goToCheckout").addEventListener("click", showCheckout);
     document.getElementById("backToMenu").addEventListener("click", backToMenu);
-    document.getElementById("brandName").addEventListener("click", (e) => {
-      e.preventDefault();
-      goHome();
-    });
     document.getElementById("checkoutForm").addEventListener("submit", submitOrder);
     document.getElementById("closeModifier").addEventListener("click", closeModifierModal);
     document.getElementById("modifierOverlay").addEventListener("click", (e) => {
       if (e.target.id === "modifierOverlay") closeModifierModal();
     });
     document.getElementById("confirmModifier").addEventListener("click", confirmModifierChoice);
+
+    // Every in-page link (header brand, hero buttons, footer link, etc.)
+    // scrolls via JS instead of a real #hash, so refreshing the page
+    // always lands at the top instead of wherever was last clicked.
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = link.getAttribute("href").slice(1);
+        if (id === "top") { goHome(); return; }
+        goToSection(id);
+      });
+    });
   }
 
   document.addEventListener("DOMContentLoaded", init);

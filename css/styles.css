@@ -92,6 +92,19 @@ p { margin: 0; }
   color: var(--brass-soft);
   letter-spacing: 0.03em;
 }
+.verify-order-link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ivory);
+  text-decoration: none;
+  border: 1px solid var(--line-on-jade);
+  padding: 9px 14px;
+  border-radius: var(--radius);
+  white-space: nowrap;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.verify-order-link:hover { border-color: var(--brass-soft); color: var(--brass-soft); }
 .cart-button {
   position: relative;
   background: var(--brass);
@@ -630,6 +643,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .site-header .wrap { height: auto; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap; row-gap: 8px; }
   .brand { font-size: 17px; flex: 1 1 auto; min-width: 0; }
   .header-status { display: none; }
+  .verify-order-link { display: none; }
   .header-actions { gap: 10px; }
   .cart-button { padding: 10px 14px; font-size: 13px; }
   .add-btn { width: 36px; height: 36px; font-size: 19px; }
