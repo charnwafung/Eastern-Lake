@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pantalla de cocina — Eastern Lake</title>
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
@@ -20,7 +22,10 @@
 
   <div id="kitchenApp" style="display:none;">
     <header class="kitchen-header">
-      <h1>🥡 Eastern Lake — Cocina</h1>
+      <div style="display:flex; align-items:center;">
+        <span class="brand-logo-chip"><img src="img/logo-wide.png" alt="Eastern Lake" class="brand-logo"></span>
+        <h1 style="font-size: 15px; margin-left: 12px; opacity: 0.8;">Cocina</h1>
+      </div>
       <div class="kitchen-status">
         <span class="status-dot" id="statusDot"></span>
         <span id="statusText">Conectando…</span>

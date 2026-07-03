@@ -14,8 +14,6 @@
   /* ---------- boot: fill in restaurant details ---------- */
   function initBranding() {
     document.title = `${RESTAURANT.name} — Ordena para recoger`;
-    document.getElementById("brandName").textContent =
-      `${RESTAURANT.name} · ${RESTAURANT.tagline}`;
     document.getElementById("heroSub").textContent =
       `${RESTAURANT.tagline}. Ordena en línea y estará listo cuando llegues.`;
     const noteEl = document.getElementById("heroNote");

@@ -160,6 +160,9 @@ app.post("/orders", async (req, res) => {
       // If Stripe isn't configured, orders are treated as "pay at
       // pickup" and paid stays false — that's fine, it's informational.
       paid: false,
+      // Tracked separately from status/done so the print agent and the
+      // Kitchen Display screen can be used independently or together.
+      printed: false,
       createdAt: new Date().toISOString()
     };
     orders.push(record);
@@ -184,6 +187,16 @@ app.patch("/orders/:id/done", requirePin, async (req, res) => {
   const found = await withOrders(orders => {
     const order = orders.find(o => o.id === req.params.id);
     if (order) order.status = "done";
+    return order;
+  });
+  if (!found) return res.status(404).json({ error: "Order not found." });
+  res.json({ ok: true });
+});
+
+app.patch("/orders/:id/printed", requirePin, async (req, res) => {
+  const found = await withOrders(orders => {
+    const order = orders.find(o => o.id === req.params.id);
+    if (order) order.printed = true;
     return order;
   });
   if (!found) return res.status(404).json({ error: "Order not found." });

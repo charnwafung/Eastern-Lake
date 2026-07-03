@@ -80,6 +80,20 @@ p { margin: 0; }
   letter-spacing: 0.01em;
   text-decoration: none;
   color: var(--ivory);
+  display: flex;
+  align-items: center;
+}
+.brand-logo-chip {
+  background: var(--ivory);
+  border-radius: 8px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+}
+.brand-logo {
+  height: 34px;
+  width: auto;
+  display: block;
 }
 .header-actions {
   display: flex;
