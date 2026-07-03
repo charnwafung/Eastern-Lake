@@ -329,6 +329,64 @@ p { margin: 0; }
 .tag-veg   { background: rgba(124, 148, 129, 0.16); color: #4E6E53; }
 .tag-gf    { background: rgba(185, 138, 62, 0.14); color: #8A6526; }
 .tag-house { background: rgba(23, 21, 15, 0.08); color: var(--ink-soft); }
+.tag-mod { background: rgba(185, 138, 62, 0.16); color: #8A6526; }
+
+/* ============================================================
+   MODIFIER PICKER MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 36, 27, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 52;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modifier-modal {
+  background: var(--paper);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-ticket);
+  width: 100%;
+  max-width: 420px;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: scale(0.96);
+  transition: transform 0.2s ease;
+}
+.modal-overlay.open .modifier-modal { transform: scale(1); }
+.modifier-head {
+  padding: 20px 22px 14px;
+  border-bottom: 1px dashed var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+}
+.modifier-head h2 { font-size: 18px; }
+.modifier-body { padding: 6px 22px; }
+.modifier-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+.modifier-option:last-child { border-bottom: none; }
+.modifier-option input[type="radio"] { margin-top: 3px; accent-color: var(--jade); flex-shrink: 0; }
+.modifier-option-label { font-size: 14px; flex: 1; }
+.modifier-option-price { font-family: var(--font-mono); font-size: 13px; color: var(--ink-soft); white-space: nowrap; }
+.modifier-foot { padding: 16px 22px 20px; border-top: 1px dashed var(--line); }
+.cart-line-modifier { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
 
 .add-btn {
   align-self: center;

@@ -136,6 +136,20 @@
 
 </main>
 
+<!-- ============ MODIFIER PICKER ============ -->
+<div class="modal-overlay" id="modifierOverlay">
+  <aside class="modifier-modal" id="modifierModal" role="dialog" aria-label="Personalizar plato" aria-hidden="true">
+    <div class="modifier-head">
+      <h2 id="modifierDishName">Plato</h2>
+      <button class="drawer-close" id="closeModifier" aria-label="Cerrar">&times;</button>
+    </div>
+    <div class="modifier-body" id="modifierOptions"></div>
+    <div class="modifier-foot">
+      <button class="btn-primary" id="confirmModifier" style="width:100%;">Agregar a la orden</button>
+    </div>
+  </aside>
+</div>
+
 <!-- ============ CART DRAWER ============ -->
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="cartDrawer" role="dialog" aria-label="Tu orden" aria-hidden="true">
