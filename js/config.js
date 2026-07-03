@@ -19,8 +19,8 @@ const RESTAURANT = {
   // in the kitchen.html link, e.g. kitchen.html?pin=4821, and bookmark
   // that link on the kitchen's tablet/laptop.
   phone: "(787) 292-0920 / (787) 292-7759",
-  address: "1 Cll Frontera, San Juan, PR 00926",
-  note: "Servi-carro y orden por teléfono disponible",
+  address: "Centro Comercial Villa Andalucía, 1 Cll Frontera, San Juan, PR 00926",
+  note: "Recogido disponible en mostrador o por servi-carro (drive-through)",
 
   // Hours in 24h time. Set a day to null to mark it closed.
   hours: {

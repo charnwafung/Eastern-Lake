@@ -17,7 +17,8 @@ const MODIFIER_GROUPS = {
     label: "Guarnición",
     type: "single", // only one option can be chosen
     options: [
-      { id: "papas", label: "Con papas (regular)", price: 0 },
+      { id: "papas", label: "Regular (con arroz frito y papas)", price: 0 },
+      { id: "solo", label: "Solo (carne solo)", price: 0 },
       { id: "sin_papas", label: "Sin papas", price: 0 },
       { id: "tostones_ajo", label: "Sin papas, con tostones con ajo", price: 3 },
       { id: "tostones_sin_ajo", label: "Sin papas, con tostones sin ajo", price: 3 },
