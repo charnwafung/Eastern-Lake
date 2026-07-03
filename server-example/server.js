@@ -191,6 +191,36 @@ app.patch("/orders/:id/done", requirePin, async (req, res) => {
 });
 
 /* ------------------------------------------------------------
+   Customer-facing: look up an order's status. No PIN needed, but
+   requires the phone number to match — order IDs alone are
+   guessable (they're sequential), so this stops a stranger from
+   seeing someone else's name/order by guessing an ID.
+   ------------------------------------------------------------ */
+function normalizePhone(p) { return String(p || "").replace(/\D/g, ""); }
+
+app.post("/orders/lookup", (req, res) => {
+  const { orderId, phone } = req.body;
+  if (!orderId || !phone) {
+    return res.status(400).json({ error: "Falta el número de orden o el teléfono." });
+  }
+  const order = loadOrders().find(o => o.id.toLowerCase() === String(orderId).trim().toLowerCase());
+  const genericError = () => res.status(404).json({ error: "No encontramos esa orden. Verifica el número y el teléfono." });
+
+  if (!order) return genericError();
+  if (normalizePhone(order.customerPhone) !== normalizePhone(phone)) return genericError();
+
+  res.json({
+    id: order.id,
+    status: order.status,
+    paid: order.paid,
+    items: order.items,
+    total: order.total,
+    pickupTime: order.pickupTime,
+    createdAt: order.createdAt
+  });
+});
+
+/* ------------------------------------------------------------
    PAYMENT — Stripe Checkout. Only works once STRIPE_SECRET_KEY is
    set as an environment variable. Until then this returns a clear
    "not configured" response, and the site's checkout falls back to

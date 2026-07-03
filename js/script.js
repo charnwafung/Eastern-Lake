@@ -456,11 +456,14 @@
     }
   }
 
+  let lastOrder = null; // { id, phone } — used to prefill the lookup form from the confirmation screen
+
   function showConfirmation(name, phone, time, orderId) {
     document.getElementById("confirmName").textContent = name;
     document.getElementById("confirmPhone").textContent = phone;
     document.getElementById("confirmTime").textContent = fmtTime(time);
     document.getElementById("confirmOrderId").textContent = `#${orderId}`;
+    lastOrder = { id: orderId, phone };
 
     document.getElementById("checkoutSection").classList.remove("open");
     document.getElementById("confirmSection").classList.add("open");
@@ -469,12 +472,80 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  /* ---------- order lookup ---------- */
+  function initLookup() {
+    document.getElementById("lookupBtn").addEventListener("click", runLookup);
+    document.getElementById("goToLookupFromConfirm").addEventListener("click", () => {
+      if (lastOrder) {
+        document.getElementById("lookupOrderId").value = lastOrder.id;
+        document.getElementById("lookupPhone").value = lastOrder.phone;
+      }
+      document.getElementById("confirmSection").classList.remove("open");
+      document.getElementById("menu").style.display = "";
+      document.getElementById("hoursSection").style.display = "";
+      document.querySelector(".hero").style.display = "";
+      document.getElementById("lookupSection").scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  async function runLookup() {
+    const orderId = document.getElementById("lookupOrderId").value.trim();
+    const phone = document.getElementById("lookupPhone").value.trim();
+    const resultEl = document.getElementById("lookupResult");
+
+    if (!orderId || !phone) {
+      resultEl.innerHTML = `<p style="color: var(--chili); font-size: 13.5px;">Ingresa el número de orden y el teléfono.</p>`;
+      return;
+    }
+    const backendConfigured = RESTAURANT.backendUrl && !RESTAURANT.backendUrl.startsWith("REPLACE_WITH");
+    if (!backendConfigured) {
+      resultEl.innerHTML = `<p style="color: var(--chili); font-size: 13.5px;">El sistema de órdenes aún no está conectado.</p>`;
+      return;
+    }
+
+    resultEl.innerHTML = `<p style="font-size: 13.5px; color: var(--ink-soft);">Buscando…</p>`;
+    try {
+      const res = await fetch(`${RESTAURANT.backendUrl}/orders/lookup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId, phone })
+      });
+      if (!res.ok) {
+        resultEl.innerHTML = `<p style="color: var(--chili); font-size: 13.5px;">No encontramos esa orden. Verifica el número y el teléfono.</p>`;
+        return;
+      }
+      const data = await res.json();
+      const statusLabel = data.status === "done" ? "Lista para recoger" : "Recibida — en preparación";
+      const itemsHtml = data.items.map(it => `
+        <div style="display:flex; justify-content:space-between; font-size:13.5px; padding:4px 0;">
+          <span>${it.qty} × ${it.name}</span><span>${fmtMoney(it.price * it.qty)}</span>
+        </div>
+      `).join("");
+      resultEl.innerHTML = `
+        <div class="ticket" style="box-shadow:none;">
+          <div class="ticket-body" style="padding: 20px 24px;">
+            <p style="font-family: var(--font-mono); font-size: 12px; color: var(--sage); margin-bottom: 6px;">${data.id}</p>
+            <p style="font-weight: 700; font-size: 16px; margin-bottom: 10px;">${statusLabel}</p>
+            ${itemsHtml}
+            <div style="border-top: 1px dashed var(--line); margin-top: 10px; padding-top: 10px; font-family: var(--font-mono); font-size: 13px; display:flex; justify-content:space-between;">
+              <span>Total</span><span>${fmtMoney(data.total)}</span>
+            </div>
+            <p style="font-size: 12.5px; color: var(--ink-soft); margin-top: 10px;">Recoger: ${fmtTime(data.pickupTime)}</p>
+          </div>
+        </div>
+      `;
+    } catch (err) {
+      resultEl.innerHTML = `<p style="color: var(--chili); font-size: 13.5px;">Hubo un problema al buscar tu orden. Intenta de nuevo.</p>`;
+    }
+  }
+
 
   /* ---------- wire up ---------- */
   function init() {
     initBranding();
     initMenu();
     renderCart();
+    initLookup();
 
     document.getElementById("openCart").addEventListener("click", openDrawer);
     document.getElementById("closeCart").addEventListener("click", closeDrawer);

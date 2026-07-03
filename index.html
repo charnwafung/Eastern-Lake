@@ -73,6 +73,26 @@
     </div>
   </section>
 
+  <!-- ============ ORDER LOOKUP ============ -->
+  <section id="lookupSection" style="padding: 0 0 90px;">
+    <div class="wrap" style="max-width: 480px;">
+      <h2 style="font-size: 22px; margin-bottom: 6px;">Verificar mi orden</h2>
+      <p style="color: var(--ink-soft); font-size: 13.5px; margin-bottom: 18px;">Ingresa tu número de orden y teléfono para ver el estado.</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="lookupOrderId">Número de orden</label>
+          <input type="text" id="lookupOrderId" placeholder="EL-20260703-001">
+        </div>
+        <div class="field">
+          <label for="lookupPhone">Teléfono</label>
+          <input type="tel" id="lookupPhone" placeholder="(787) 000-0000">
+        </div>
+      </div>
+      <button class="btn-primary" id="lookupBtn" style="width:100%;">Buscar</button>
+      <div id="lookupResult" style="margin-top: 20px;"></div>
+    </div>
+  </section>
+
   <!-- ============ CHECKOUT ============ -->
   <section class="checkout-section" id="checkoutSection">
     <div class="wrap">
@@ -131,6 +151,7 @@
       <p style="margin-top:28px; font-size:12.5px; max-width:52ch;">
         Esta confirmación es temporal mientras se completa la configuración del pago — en producción esta pantalla solo aparece después de que el pago sea aprobado.
       </p>
+      <button class="btn-ghost" id="goToLookupFromConfirm" style="margin-top: 24px;">Verificar el estado más tarde</button>
     </div>
   </section>
 
@@ -172,6 +193,7 @@
   <div class="wrap">
     <span id="footAddr">—</span>
     <span id="footPhone">—</span>
+    <a href="#lookupSection" style="color: inherit;">Verificar mi orden</a>
   </div>
 </footer>
 
