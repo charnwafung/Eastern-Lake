@@ -150,3 +150,10 @@ body.kitchen-body {
   padding: 20px;
 }
 .pin-gate p { max-width: 40ch; color: rgba(244,239,228,0.75); margin-top: 10px; }
+
+@media (max-width: 480px) {
+  .kitchen-header { padding: 14px 16px; flex-wrap: wrap; row-gap: 8px; }
+  .kitchen-header h1 { font-size: 18px; }
+  .kitchen-board { grid-template-columns: 1fr; padding: 16px; gap: 14px; }
+  .order-done-btn { padding: 14px; font-size: 15px; }
+}
