@@ -189,6 +189,8 @@ p { margin: 0; }
   transition: transform 0.15s ease, background 0.15s ease;
 }
 .btn-primary:hover { background: var(--brass-soft); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn-primary:disabled:hover { background: var(--brass); }
 .btn-ghost {
   background: transparent;
   color: var(--ivory);
