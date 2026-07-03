@@ -108,7 +108,9 @@
       setTimeout(() => { btn.classList.remove("added"); btn.textContent = "+"; }, 700);
     });
 
-    // Highlight active tab on scroll
+    // Highlight active tab on scroll, and keep it visible within the
+    // horizontally-scrolling tab strip (it can otherwise land off-screen
+    // to the right as later categories become active).
     const sections = MENU.map((_, i) => document.getElementById(`cat-${i}`));
     const tabs = [...tabsEl.children];
     const io = new IntersectionObserver((entries) => {
@@ -116,7 +118,10 @@
         if (!entry.isIntersecting) return;
         const idx = sections.indexOf(entry.target);
         tabs.forEach(t => t.classList.remove("active"));
-        if (tabs[idx]) tabs[idx].classList.add("active");
+        if (tabs[idx]) {
+          tabs[idx].classList.add("active");
+          tabs[idx].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        }
       });
     }, { rootMargin: "-30% 0px -60% 0px" });
     sections.forEach(s => io.observe(s));
