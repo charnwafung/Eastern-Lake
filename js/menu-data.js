@@ -72,6 +72,7 @@ const MENU = [
   },
   {
     category: "Pollo Con Papas",
+    shortLabel: "Pollo c/Papas",
     items: [
       { no: 26, id: "pp01", name: "Pollo 1 Presa", price: 0.00 },
       { no: 27, id: "pp02", name: "Pollo 2 Presas", price: 0.00 },
@@ -83,6 +84,7 @@ const MENU = [
   },
   {
     category: "Combinación o Solo De Pollo",
+    shortLabel: "Pollo Combo",
     items: [
       { no: 32, id: "p01", name: "Pollo 2 Presas", price: 0.00, modifiers: ["guarnicion"] },
       { no: 33, id: "p02", name: "Pollo con Brocoli", price: 0.00, modifiers: ["guarnicion"] },
@@ -101,6 +103,7 @@ const MENU = [
   },
   {
     category: "Combinación o Solo De Cerdo",
+    shortLabel: "Cerdo",
     items: [
       { no: 45, id: "c01", name: "Cerdo Agridulce", price: 0.00, modifiers: ["guarnicion"] },
       { no: 46, id: "c02", name: "Costilla BBQ (con Hueso)", price: 0.00, modifiers: ["guarnicion"] },
@@ -114,6 +117,7 @@ const MENU = [
   },
   {
     category: "Combinación o Solo De Res",
+    shortLabel: "Res",
     items: [
       { no: 53, id: "b01", name: "Pepper Steak", price: 0.00, modifiers: ["guarnicion"] },
       { no: 54, id: "b02", name: "Res con Jengibre", price: 0.00, modifiers: ["guarnicion"] },
@@ -126,6 +130,7 @@ const MENU = [
   },
   {
     category: "Combinación o Solo De Marisco",
+    shortLabel: "Marisco",
     items: [
       { no: 60, id: "m01", name: "Camaron con Jengibre", price: 0.00, modifiers: ["guarnicion"] },
       { no: 61, id: "m02", name: "Camarones con Brocoli", price: 0.00, modifiers: ["guarnicion"] },
@@ -156,6 +161,7 @@ const MENU = [
   },
   {
     category: "Vegetales Mixto o Brocoli",
+    shortLabel: "Vegetales",
     items: [
       { no: 80, id: "v01", name: "Pequeño", price: 0.00 },
       { no: 81, id: "v02", name: "Regular", price: 0.00 },
@@ -164,6 +170,7 @@ const MENU = [
   },
   {
     category: "Postres y Refresco",
+    shortLabel: "Postres",
     items: [
       { no: 83, id: "d01", name: "Flan", price: 0.00 },
       { no: 84, id: "d02", name: "Tres Leche", price: 0.00 },

@@ -66,6 +66,7 @@
     return h * 60 + m;
   }
   function fmtTime(hhmm) {
+    if (hhmm === "asap") return "Lo antes posible";
     const [h, m] = hhmm.split(":").map(Number);
     const period = h >= 12 ? "PM" : "AM";
     const h12 = ((h + 11) % 12) + 1;
@@ -79,7 +80,7 @@
     const bodyEl = document.getElementById("menuBody");
 
     tabsEl.innerHTML = MENU.map((cat, i) =>
-      `<button class="tab${i === 0 ? " active" : ""}" data-target="cat-${i}">${cat.category}</button>`
+      `<button class="tab${i === 0 ? " active" : ""}" data-target="cat-${i}">${cat.shortLabel || cat.category}</button>`
     ).join("");
 
     bodyEl.innerHTML = MENU.map((cat, i) => `
@@ -162,11 +163,18 @@
     document.getElementById("modifierDishName").textContent = item.name;
     document.getElementById("modifierOptions").innerHTML = group.options.map((opt, idx) => `
       <label class="modifier-option">
-        <input type="radio" name="modifierChoice" value="${idx}" ${idx === 0 ? "checked" : ""}>
+        <input type="radio" name="modifierChoice" value="${idx}">
         <span class="modifier-option-label">${opt.label}</span>
         <span class="modifier-option-price">${opt.price > 0 ? "+" + fmtMoney(opt.price) : ""}</span>
       </label>
     `).join("");
+
+    const confirmBtn = document.getElementById("confirmModifier");
+    confirmBtn.disabled = true;
+    document.getElementById("modifierOptions").querySelectorAll('input[name="modifierChoice"]').forEach(input => {
+      input.addEventListener("change", () => { confirmBtn.disabled = false; });
+    });
+
     document.getElementById("modifierOverlay").classList.add("open");
   }
 
@@ -180,7 +188,8 @@
     const groupId = pendingItem.modifiers[0];
     const group = MODIFIER_GROUPS[groupId];
     const checked = document.querySelector('input[name="modifierChoice"]:checked');
-    const optIndex = checked ? Number(checked.value) : 0;
+    if (!checked) return; // shouldn't happen since the button is disabled until a choice is made
+    const optIndex = Number(checked.value);
     const opt = group.options[optIndex];
     // First option represents "no change" — don't attach a modifier for it,
     // so it groups normally with plain adds of the same dish.
@@ -318,14 +327,18 @@
     // round up to next slot interval
     startMin = Math.ceil(startMin / RESTAURANT.slotIntervalMinutes) * RESTAURANT.slotIntervalMinutes;
 
+    // Only offer slots within the next hour — anything further out, the
+    // customer can just come back closer to that time to order.
+    const windowEnd = Math.min(closeMin - 5, startMin + 60);
+
     const options = [];
-    for (let m = startMin; m <= closeMin - 5; m += RESTAURANT.slotIntervalMinutes) {
+    for (let m = startMin; m <= windowEnd; m += RESTAURANT.slotIntervalMinutes) {
       const hh = String(Math.floor(m / 60)).padStart(2, "0");
       const mm = String(m % 60).padStart(2, "0");
       options.push(`${hh}:${mm}`);
     }
 
-    if (options.length === 0) {
+    if (startMin > closeMin - 5) {
       select.innerHTML = `<option value="">No quedan horarios disponibles hoy</option>`;
       select.disabled = true;
       noteEl.textContent = "La cocina está por cerrar — intenta de nuevo mañana.";
@@ -333,7 +346,8 @@
     }
 
     select.disabled = false;
-    select.innerHTML = options.map(t => `<option value="${t}">${fmtTime(t)}</option>`).join("");
+    const asapOption = `<option value="asap">Lo antes posible (~${RESTAURANT.minLeadMinutes} min)</option>`;
+    select.innerHTML = asapOption + options.map(t => `<option value="${t}">${fmtTime(t)}</option>`).join("");
     noteEl.textContent = `Necesitamos al menos ${RESTAURANT.minLeadMinutes} minutos para preparar tu orden.`;
   }
 
@@ -350,11 +364,17 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function backToMenu() {
+  function goHome() {
     document.getElementById("checkoutSection").classList.remove("open");
+    document.getElementById("confirmSection").classList.remove("open");
     document.getElementById("menu").style.display = "";
     document.getElementById("hoursSection").style.display = "";
     document.querySelector(".hero").style.display = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function backToMenu() {
+    goHome();
   }
 
   async function submitOrder(e) {
@@ -461,6 +481,10 @@
     document.getElementById("overlay").addEventListener("click", closeDrawer);
     document.getElementById("goToCheckout").addEventListener("click", showCheckout);
     document.getElementById("backToMenu").addEventListener("click", backToMenu);
+    document.getElementById("brandName").addEventListener("click", (e) => {
+      e.preventDefault();
+      goHome();
+    });
     document.getElementById("checkoutForm").addEventListener("submit", submitOrder);
     document.getElementById("closeModifier").addEventListener("click", closeModifierModal);
     document.getElementById("modifierOverlay").addEventListener("click", (e) => {

@@ -214,9 +214,14 @@ p { margin: 0; }
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding-bottom: 14px;
+  padding: 12px 0 14px;
   margin-bottom: 8px;
   scrollbar-width: none;
+  position: sticky;
+  top: 68px;
+  z-index: 30;
+  background: var(--ivory);
+  border-bottom: 1px solid var(--line);
 }
 .category-tabs::-webkit-scrollbar { display: none; }
 .tab {
@@ -632,6 +637,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .cart-line-remove { padding: 6px 0; }
   .hero { padding: 48px 0 64px; }
   .hero h1 { font-size: clamp(32px, 9vw, 44px); }
+  .category-tabs { top: 58px; }
 }
 @media (max-width: 520px) {
   .ticket-body { padding: 24px 18px 24px 40px; }

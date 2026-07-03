@@ -50,6 +50,7 @@
   function fmtMoney(n) { return `$${Number(n || 0).toFixed(2)}`; }
   function fmtPickupTime(hhmm) {
     if (!hhmm) return "—";
+    if (hhmm === "asap") return "LO ANTES POSIBLE";
     const [h, m] = hhmm.split(":").map(Number);
     const period = h >= 12 ? "PM" : "AM";
     const h12 = ((h + 11) % 12) + 1;
