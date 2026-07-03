@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eastern Lake — Order for Pickup</title>
-<meta name="description" content="Order ahead for pickup. Cantonese cooking, made to order.">
+<title>Eastern Lake — Ordena para recoger</title>
+<meta name="description" content="Ordena con anticipación para recoger. Cocina china, sabor de Puerto Rico.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
@@ -15,9 +15,9 @@
   <div class="wrap">
     <a href="#top" class="brand" id="brandName">Eastern Lake</a>
     <div class="header-actions">
-      <span class="header-status" id="openStatus">Checking hours…</span>
+      <span class="header-status" id="openStatus">Verificando horario…</span>
       <button class="cart-button" id="openCart" aria-haspopup="dialog">
-        Order <span class="cart-count" id="cartCount">0</span>
+        Ordenar <span class="cart-count" id="cartCount">0</span>
       </button>
     </div>
   </div>
@@ -29,20 +29,20 @@
   <section class="hero">
     <div class="wrap">
       <div>
-        <span class="eyebrow hero-eyebrow">Pickup only · No delivery</span>
-        <h1>Order ahead.<br><em>Skip the line.</em></h1>
-        <p class="hero-sub" id="heroSub">Cantonese cooking, made to order. Place your order online and it'll be ready when you walk in.</p>
+        <span class="eyebrow hero-eyebrow">Solo para recoger · Sin entrega</span>
+        <h1>Ordena con anticipación.<br><em>Evita la fila.</em></h1>
+        <p class="hero-sub" id="heroSub">Cocina china, sabor de Puerto Rico. Ordena en línea y estará listo cuando llegues.</p>
         <p class="eyebrow" id="heroNote" style="margin-top:10px; color: var(--brass-soft);"></p>
 
         <div class="hero-meta">
-          <div><strong>Hours today</strong><span id="hoursToday">—</span></div>
-          <div><strong>Pickup at</strong><span id="pickupAddr">—</span></div>
-          <div><strong>Call ahead</strong><span id="pickupPhone">—</span></div>
+          <div><strong>Horario de hoy</strong><span id="hoursToday">—</span></div>
+          <div><strong>Recoger en</strong><span id="pickupAddr">—</span></div>
+          <div><strong>Llamar antes</strong><span id="pickupPhone">—</span></div>
         </div>
 
         <div class="hero-cta">
-          <a href="#menu" class="btn-primary">View menu &amp; order</a>
-          <a href="#hoursSection" class="btn-ghost">Hours &amp; location</a>
+          <a href="#menu" class="btn-primary">Ver menú y ordenar</a>
+          <a href="#hoursSection" class="btn-ghost">Horario y ubicación</a>
         </div>
       </div>
 
@@ -68,11 +68,11 @@
   <section class="menu-section" id="menu">
     <div class="wrap">
       <div class="menu-heading">
-        <span class="eyebrow">Today's menu</span>
-        <h2>Pick your order</h2>
+        <span class="eyebrow">Menú de hoy</span>
+        <h2>Elige tu orden</h2>
       </div>
 
-      <nav class="category-tabs" id="categoryTabs" aria-label="Menu categories"></nav>
+      <nav class="category-tabs" id="categoryTabs" aria-label="Categorías del menú"></nav>
 
       <div class="ticket">
         <div class="ticket-body" id="menuBody"></div>
@@ -83,7 +83,7 @@
   <!-- ============ HOURS / LOCATION ============ -->
   <section id="hoursSection" style="padding: 40px 0 90px;">
     <div class="wrap" style="max-width: 640px;">
-      <h2 style="font-size:24px; margin-bottom: 16px;">Hours &amp; pickup location</h2>
+      <h2 style="font-size:24px; margin-bottom: 16px;">Horario y lugar para recoger</h2>
       <div id="hoursTable" style="font-family: var(--font-mono); font-size: 14px; line-height: 2;"></div>
       <p style="margin-top:16px; color: var(--ink-soft); font-size: 14px;" id="fullAddress"></p>
     </div>
@@ -92,45 +92,45 @@
   <!-- ============ CHECKOUT ============ -->
   <section class="checkout-section" id="checkoutSection">
     <div class="wrap">
-      <button class="btn-ghost" id="backToMenu" style="margin-bottom: 28px;">&larr; Back to menu</button>
+      <button class="btn-ghost" id="backToMenu" style="margin-bottom: 28px;">&larr; Volver al menú</button>
       <div class="checkout-grid">
         <div class="form-card">
-          <h2>Pickup details</h2>
+          <h2>Detalles de recogida</h2>
           <form id="checkoutForm">
             <div class="field-row">
               <div class="field">
-                <label for="custName">Name</label>
+                <label for="custName">Nombre</label>
                 <input type="text" id="custName" required autocomplete="name">
               </div>
               <div class="field">
-                <label for="custPhone">Phone</label>
+                <label for="custPhone">Teléfono</label>
                 <input type="tel" id="custPhone" required autocomplete="tel" placeholder="(787) 000-0000">
               </div>
             </div>
 
             <div class="field">
-              <label for="pickupTime">Pickup time</label>
+              <label for="pickupTime">Hora de recogida</label>
               <select id="pickupTime" required></select>
             </div>
             <p class="form-note" id="leadTimeNote"></p>
 
             <div class="field">
-              <label for="orderNotes">Notes for the kitchen (optional)</label>
-              <textarea id="orderNotes" placeholder="Allergies, spice preference, no cilantro, etc."></textarea>
+              <label for="orderNotes">Notas para la cocina (opcional)</label>
+              <textarea id="orderNotes" placeholder="Alergias, preferencia de picante, sin cilantro, etc."></textarea>
             </div>
 
-            <button type="submit" class="btn-primary" style="width:100%;">Continue to payment</button>
+            <button type="submit" class="btn-primary" style="width:100%;">Continuar al pago</button>
           </form>
         </div>
 
         <div class="summary-card">
-          <h2>Order summary</h2>
+          <h2>Resumen de la orden</h2>
           <div id="summaryLines"></div>
           <div class="totals-row"><span>Subtotal</span><span id="sumSubtotal">$0.00</span></div>
-          <div class="totals-row"><span>Tax (11.5%)</span><span id="sumTax">$0.00</span></div>
-          <div class="totals-row grand"><span>Total due at pickup</span><span id="sumTotal">$0.00</span></div>
+          <div class="totals-row"><span>Impuesto (11.5%)</span><span id="sumTax">$0.00</span></div>
+          <div class="totals-row grand"><span>Total a pagar al recoger</span><span id="sumTotal">$0.00</span></div>
           <div class="pay-note">
-            Payment is completed on the next secure step, hosted by our payment processor. Your card details are never entered on this page.
+            El pago se completa en el siguiente paso seguro, a cargo de nuestro procesador de pagos. Los datos de tu tarjeta nunca se ingresan en esta página.
           </div>
         </div>
       </div>
@@ -140,12 +140,12 @@
   <!-- ============ CONFIRMATION (demo placeholder) ============ -->
   <section class="confirm-section" id="confirmSection">
     <div class="wrap">
-      <div class="confirm-stamp">ORDER<br>RECEIVED</div>
-      <h2>Thanks, <span id="confirmName">friend</span>.</h2>
-      <p>Your order will be ready for pickup at <strong id="confirmTime">—</strong>. We'll text <span id="confirmPhone">—</span> if anything changes.</p>
+      <div class="confirm-stamp">ORDEN<br>RECIBIDA</div>
+      <h2>Gracias, <span id="confirmName">amigo</span>.</h2>
+      <p>Tu orden estará lista para recoger a las <strong id="confirmTime">—</strong>. Te enviaremos un mensaje a <span id="confirmPhone">—</span> si algo cambia.</p>
       <div class="confirm-order-id" id="confirmOrderId">#000000</div>
       <p style="margin-top:28px; font-size:12.5px; max-width:52ch;">
-        This confirmation is a placeholder for the demo build — in production this screen appears only after the payment step approves the charge.
+        Esta confirmación es temporal mientras se completa la configuración del pago — en producción esta pantalla solo aparece después de que el pago sea aprobado.
       </p>
     </div>
   </section>
@@ -154,19 +154,19 @@
 
 <!-- ============ CART DRAWER ============ -->
 <div class="overlay" id="overlay"></div>
-<aside class="drawer" id="cartDrawer" role="dialog" aria-label="Your order" aria-hidden="true">
+<aside class="drawer" id="cartDrawer" role="dialog" aria-label="Tu orden" aria-hidden="true">
   <div class="drawer-head">
-    <h2>Your order</h2>
-    <button class="drawer-close" id="closeCart" aria-label="Close cart">&times;</button>
+    <h2>Tu orden</h2>
+    <button class="drawer-close" id="closeCart" aria-label="Cerrar carrito">&times;</button>
   </div>
   <div class="drawer-body" id="drawerBody">
-    <div class="drawer-empty">Nothing here yet — add a dish from the menu.</div>
+    <div class="drawer-empty">Aún no hay nada — agrega un plato del menú.</div>
   </div>
   <div class="drawer-foot" id="drawerFoot" style="display:none;">
     <div class="totals-row"><span>Subtotal</span><span id="drawerSubtotal">$0.00</span></div>
-    <div class="totals-row"><span>Tax (11.5%)</span><span id="drawerTax">$0.00</span></div>
+    <div class="totals-row"><span>Impuesto (11.5%)</span><span id="drawerTax">$0.00</span></div>
     <div class="totals-row grand"><span>Total</span><span id="drawerTotal">$0.00</span></div>
-    <button class="btn-primary" id="goToCheckout">Choose pickup time</button>
+    <button class="btn-primary" id="goToCheckout">Elegir hora de recogida</button>
   </div>
 </aside>
 
