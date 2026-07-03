@@ -126,12 +126,14 @@
     const noHtml = item.no ? `<span class="dish-no">${item.no}.</span>` : "";
     return `
       <div class="dish">
-        <div>
+        <div class="dish-info">
           <div class="dish-name">${noHtml}${item.name} ${tagHtml}</div>
           ${item.desc ? `<div class="dish-desc">${item.desc}</div>` : ""}
         </div>
-        <div class="dish-price">${priceHtml}</div>
-        <button class="add-btn" data-id="${item.id}" aria-label="Agregar ${item.name} a la orden">+</button>
+        <div class="dish-price-group">
+          <span class="dish-price">${priceHtml}</span>
+          <button class="add-btn" data-id="${item.id}" aria-label="Agregar ${item.name} a la orden">+</button>
+        </div>
       </div>
     `;
   }
