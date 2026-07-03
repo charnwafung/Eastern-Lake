@@ -8,12 +8,16 @@ const RESTAURANT = {
   name: "Eastern Lake",
   tagline: "Restaurante Chino",
 
-  // URL of your deployed payment backend (the server-example/ folder,
-  // once deployed to Render or similar). Leave the placeholder in
-  // place until then — the site will show a friendly message instead
-  // of trying to charge a card.
-  // Example once deployed: "https://easternlake-payments.onrender.com"
-  paymentApiUrl: "REPLACE_WITH_YOUR_RENDER_URL",
+  // URL of your deployed backend (the server-example/ folder, once
+  // deployed to Render or similar). This one URL handles both saving
+  // orders for the Kitchen Display and (once Stripe is set up)
+  // starting a payment. Leave the placeholder in place until deployed.
+  // Example once deployed: "https://easternlake-backend.onrender.com"
+  backendUrl: "REPLACE_WITH_YOUR_RENDER_URL",
+
+  // The PIN set on your backend as KITCHEN_PIN — put the same value
+  // in the kitchen.html link, e.g. kitchen.html?pin=4821, and bookmark
+  // that link on the kitchen's tablet/laptop.
   phone: "(787) 292-0920 / (787) 292-7759",
   address: "1 Cll Frontera, San Juan, PR 00926",
   note: "Servi-carro y orden por teléfono disponible",

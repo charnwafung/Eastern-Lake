@@ -3,7 +3,7 @@
 
   const TAX_RATE = 0.115; // Puerto Rico IVU — adjust if your municipality differs
   const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  const DAY_LABELS = { sun: "Sunday", mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday", fri: "Friday", sat: "Saturday" };
+  const DAY_LABELS = { sun: "Domingo", mon: "Lunes", tue: "Martes", wed: "Miércoles", thu: "Jueves", fri: "Viernes", sat: "Sábado" };
 
   /* ---------- state ---------- */
   // Cart lives in memory only (not localStorage) so it resets on reload.
@@ -13,11 +13,11 @@
 
   /* ---------- boot: fill in restaurant details ---------- */
   function initBranding() {
-    document.title = `${RESTAURANT.name} — Order for Pickup`;
+    document.title = `${RESTAURANT.name} — Ordena para recoger`;
     document.getElementById("brandName").textContent =
       `${RESTAURANT.name} · ${RESTAURANT.tagline}`;
     document.getElementById("heroSub").textContent =
-      `${RESTAURANT.tagline}. Place your order online and it'll be ready when you walk in.`;
+      `${RESTAURANT.tagline}. Ordena en línea y estará listo cuando llegues.`;
     const noteEl = document.getElementById("heroNote");
     if (noteEl) noteEl.textContent = RESTAURANT.note || "";
     document.getElementById("pickupAddr").textContent = RESTAURANT.address.split(",")[0];
@@ -30,7 +30,7 @@
     table.innerHTML = DAY_KEYS.map(k => {
       const h = RESTAURANT.hours[k];
       const label = DAY_LABELS[k];
-      const text = h ? `${fmtTime(h.open)} – ${fmtTime(h.close)}` : "Closed";
+      const text = h ? `${fmtTime(h.open)} – ${fmtTime(h.close)}` : "Cerrado";
       return `<div style="display:flex; justify-content:space-between; max-width:280px;"><span>${label}</span><span>${text}</span></div>`;
     }).join("");
 
@@ -46,8 +46,8 @@
     const todayEl = document.getElementById("hoursToday");
 
     if (!h) {
-      statusEl.textContent = "Closed today";
-      todayEl.textContent = "Closed today";
+      statusEl.textContent = "Cerrado hoy";
+      todayEl.textContent = "Cerrado hoy";
       return;
     }
     const text = `${fmtTime(h.open)} – ${fmtTime(h.close)}`;
@@ -57,8 +57,8 @@
     const openMin = toMinutes(h.open);
     const closeMin = toMinutes(h.close);
     statusEl.textContent = (nowMin >= openMin && nowMin < closeMin)
-      ? `Open now · until ${fmtTime(h.close)}`
-      : "Closed now";
+      ? `Abierto ahora · hasta las ${fmtTime(h.close)}`
+      : "Cerrado ahora";
   }
 
   function toMinutes(hhmm) {
@@ -122,7 +122,7 @@
     const tagHtml = item.tag ? `<span class="tag tag-${item.tag}">${item.tag}</span>` : "";
     const priceHtml = item.price > 0
       ? fmtMoney(item.price)
-      : `<span class="price-todo">set price</span>`;
+      : `<span class="price-todo">agregar precio</span>`;
     const noHtml = item.no ? `<span class="dish-no">${item.no}.</span>` : "";
     return `
       <div class="dish">
@@ -131,7 +131,7 @@
           ${item.desc ? `<div class="dish-desc">${item.desc}</div>` : ""}
         </div>
         <div class="dish-price">${priceHtml}</div>
-        <button class="add-btn" data-id="${item.id}" aria-label="Add ${item.name} to order">+</button>
+        <button class="add-btn" data-id="${item.id}" aria-label="Agregar ${item.name} a la orden">+</button>
       </div>
     `;
   }
@@ -179,7 +179,7 @@
     const foot = document.getElementById("drawerFoot");
 
     if (count === 0) {
-      body.innerHTML = `<div class="drawer-empty">Nothing here yet — add a dish from the menu.</div>`;
+      body.innerHTML = `<div class="drawer-empty">Aún no hay nada — agrega un plato del menú.</div>`;
       foot.style.display = "none";
       return;
     }
@@ -187,15 +187,15 @@
     body.innerHTML = cartEntries().map(([id, { item, qty }]) => `
       <div class="cart-line">
         <div class="qty-control">
-          <button data-act="dec" data-id="${id}" aria-label="Decrease quantity">−</button>
+          <button data-act="dec" data-id="${id}" aria-label="Reducir cantidad">−</button>
           <span>${qty}</span>
-          <button data-act="inc" data-id="${id}" aria-label="Increase quantity">+</button>
+          <button data-act="inc" data-id="${id}" aria-label="Aumentar cantidad">+</button>
         </div>
         <div>
           <div class="cart-line-name">${item.name}</div>
         </div>
         <div class="cart-line-price">${fmtMoney(item.price * qty)}</div>
-        <button class="cart-line-remove" data-act="remove" data-id="${id}">remove</button>
+        <button class="cart-line-remove" data-act="remove" data-id="${id}">quitar</button>
       </div>
     `).join("");
 
@@ -251,9 +251,9 @@
     const noteEl = document.getElementById("leadTimeNote");
 
     if (!h) {
-      select.innerHTML = `<option value="">Closed today</option>`;
+      select.innerHTML = `<option value="">Cerrado hoy</option>`;
       select.disabled = true;
-      noteEl.textContent = "We're closed today — please check our hours above.";
+      noteEl.textContent = "Hoy estamos cerrados — revisa nuestro horario arriba.";
       return;
     }
 
@@ -271,15 +271,15 @@
     }
 
     if (options.length === 0) {
-      select.innerHTML = `<option value="">No pickup slots left today</option>`;
+      select.innerHTML = `<option value="">No quedan horarios disponibles hoy</option>`;
       select.disabled = true;
-      noteEl.textContent = "Kitchen is closing soon — try again tomorrow.";
+      noteEl.textContent = "La cocina está por cerrar — intenta de nuevo mañana.";
       return;
     }
 
     select.disabled = false;
     select.innerHTML = options.map(t => `<option value="${t}">${fmtTime(t)}</option>`).join("");
-    noteEl.textContent = `We need at least ${RESTAURANT.minLeadMinutes} minutes to prepare your order.`;
+    noteEl.textContent = `Necesitamos al menos ${RESTAURANT.minLeadMinutes} minutos para preparar tu orden.`;
   }
 
   /* ---------- navigation between sections ---------- */
@@ -307,48 +307,73 @@
     const name = document.getElementById("custName").value.trim();
     const phone = document.getElementById("custPhone").value.trim();
     const time = document.getElementById("pickupTime").value;
+    const notes = document.getElementById("orderNotes").value.trim();
     if (!name || !phone || !time) return;
 
-    const orderId = Math.floor(100000 + Math.random() * 900000);
     const sub = subtotal();
-    const total = sub + sub * TAX_RATE;
+    const tax = sub * TAX_RATE;
+    const total = sub + tax;
+    const orderItems = cartEntries().map(([, { item, qty }]) => ({ name: item.name, qty, price: item.price }));
 
     const submitBtn = e.target.querySelector('button[type="submit"]');
-    const backendConfigured = RESTAURANT.paymentApiUrl && !RESTAURANT.paymentApiUrl.startsWith("REPLACE_WITH");
+    const backendConfigured = RESTAURANT.backendUrl && !RESTAURANT.backendUrl.startsWith("REPLACE_WITH");
 
     if (!backendConfigured) {
-      // No payment backend deployed yet — fall through to the demo
-      // confirmation so the ordering flow is still testable end to end.
-      showConfirmation(name, phone, time, orderId);
+      // No backend deployed yet — fall through to the demo confirmation
+      // so the ordering flow is still testable end to end. Nothing is
+      // saved for the Kitchen Display in this case.
+      const fallbackId = Math.floor(100000 + Math.random() * 900000);
+      showConfirmation(name, phone, time, fallbackId);
       return;
     }
 
     submitBtn.disabled = true;
-    submitBtn.textContent = "Connecting to payment…";
+    submitBtn.textContent = "Enviando tu orden…";
 
     try {
-      const res = await fetch(`${RESTAURANT.paymentApiUrl}/create-payment`, {
+      // 1. Save the order so it shows up on the Kitchen Display.
+      const orderRes = await fetch(`${RESTAURANT.backendUrl}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          orderId,
           customerName: name,
           customerPhone: phone,
           pickupTime: time,
-          total: total.toFixed(2)
+          notes,
+          items: orderItems,
+          subtotal: sub,
+          tax,
+          total
         })
       });
-      if (!res.ok) throw new Error("Payment server error");
-      const data = await res.json();
-      if (!data.processUrl) throw new Error("No payment URL returned");
+      if (!orderRes.ok) throw new Error("Could not save order");
+      const orderData = await orderRes.json();
+      const orderId = orderData.orderId;
 
-      // Hand off to Evertec's hosted PlaceToPay checkout page.
-      window.location.href = data.processUrl;
+      // 2. Try to start payment. If Stripe isn't configured on the
+      //    backend yet (501), the order is still saved and visible
+      //    in the kitchen — just skip straight to confirmation.
+      submitBtn.textContent = "Conectando con el pago…";
+      const payRes = await fetch(`${RESTAURANT.backendUrl}/create-payment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId, customerName: name, customerPhone: phone, pickupTime: time, items: orderItems, tax })
+      });
+
+      if (payRes.status === 501) {
+        showConfirmation(name, phone, time, orderId);
+        return;
+      }
+      if (!payRes.ok) throw new Error("Payment server error");
+      const payData = await payRes.json();
+      if (!payData.processUrl) throw new Error("No payment URL returned");
+
+      window.location.href = payData.processUrl;
     } catch (err) {
       console.error(err);
       submitBtn.disabled = false;
-      submitBtn.textContent = "Continue to payment";
-      alert("We couldn't reach the payment system just now. Please try again in a moment or call us to order.");
+      submitBtn.textContent = "Continuar al pago";
+      alert("No pudimos conectar con el sistema de órdenes. Intenta de nuevo en un momento o llámanos para ordenar.");
     }
   }
 
@@ -364,6 +389,7 @@
     renderCart();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+
 
   /* ---------- wire up ---------- */
   function init() {
