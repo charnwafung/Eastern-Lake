@@ -199,3 +199,9 @@ const MENU = [
     ]
   }
 ];
+
+// Also usable from Node (the backend requires this same file so order
+// prices are computed from one authoritative menu, not sent by the browser).
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { MENU, MODIFIER_GROUPS };
+}

@@ -401,13 +401,13 @@
     const notes = document.getElementById("orderNotes").value.trim();
     if (!name || !phone || !time) return;
 
-    const sub = subtotal();
-    const tax = sub * TAX_RATE;
-    const total = sub + tax;
+    // Send item + modifier ids only, not a computed price — the backend
+    // looks up prices itself from its own menu copy so a tampered request
+    // can't charge something other than the real menu price.
     const orderItems = cartEntries().map(([, entry]) => ({
-      name: lineDisplayName(entry),
-      qty: entry.qty,
-      price: lineUnitPrice(entry)
+      id: entry.item.id,
+      modifierOptionId: entry.modifier ? entry.modifier.optionId : null,
+      qty: entry.qty
     }));
 
     const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -435,10 +435,7 @@
           customerPhone: phone,
           pickupTime: time,
           notes,
-          items: orderItems,
-          subtotal: sub,
-          tax,
-          total
+          items: orderItems
         })
       });
       if (!orderRes.ok) throw new Error("Could not save order");
@@ -452,7 +449,7 @@
       const payRes = await fetch(`${RESTAURANT.backendUrl}/create-payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId, customerName: name, customerPhone: phone, pickupTime: time, items: orderItems, tax })
+        body: JSON.stringify({ orderId })
       });
 
       if (payRes.status === 501) {

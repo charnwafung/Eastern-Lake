@@ -42,6 +42,9 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const { MENU, MODIFIER_GROUPS } = require("../js/menu-data.js");
+
+const TAX_RATE = 0.115; // Puerto Rico IVU — keep in sync with js/script.js
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
@@ -139,15 +142,66 @@ function requirePin(req, res, next) {
 }
 
 /* ------------------------------------------------------------
+   Pricing — recomputed from this server's own copy of the menu,
+   never trusted from the browser. Otherwise a tampered request
+   could set any price it wants (or charge for items that don't
+   exist), since price_data for Stripe is built from whatever
+   gets returned here.
+   ------------------------------------------------------------ */
+function findMenuItem(id) {
+  for (const cat of MENU) {
+    const found = cat.items.find(i => i.id === id);
+    if (found) return found;
+  }
+  return null;
+}
+
+// rawItems: [{ id, modifierOptionId, qty }] as sent by the site.
+// Returns priced { name, qty, price } lines, or null if anything in the
+// request doesn't match a real menu item/modifier/quantity.
+function priceOrderItems(rawItems) {
+  if (!Array.isArray(rawItems) || rawItems.length === 0) return null;
+  const priced = [];
+  for (const raw of rawItems) {
+    const menuItem = raw && findMenuItem(raw.id);
+    const qty = raw && Number(raw.qty);
+    if (!menuItem || !Number.isInteger(qty) || qty <= 0) return null;
+
+    let unitPrice = menuItem.price;
+    let name = menuItem.name;
+
+    if (raw.modifierOptionId) {
+      const groupId = menuItem.modifiers && menuItem.modifiers[0];
+      const group = groupId && MODIFIER_GROUPS[groupId];
+      const option = group && group.options.find(o => o.id === raw.modifierOptionId);
+      if (!option) return null;
+      unitPrice += option.price;
+      name = `${menuItem.name} — ${option.label}`;
+    }
+
+    priced.push({ name, qty, price: unitPrice });
+  }
+  return priced;
+}
+
+/* ------------------------------------------------------------
    Customer-facing: create an order (no PIN needed — anyone
    placing an order through the site calls this).
    ------------------------------------------------------------ */
 app.post("/orders", async (req, res) => {
-  const { customerName, customerPhone, pickupTime, notes, items, subtotal, tax, total } = req.body;
+  const { customerName, customerPhone, pickupTime, notes, items: rawItems } = req.body;
 
-  if (!customerName || !customerPhone || !pickupTime || !Array.isArray(items) || items.length === 0) {
+  if (!customerName || !customerPhone || !pickupTime) {
     return res.status(400).json({ error: "Missing required order fields." });
   }
+
+  const items = priceOrderItems(rawItems);
+  if (!items) {
+    return res.status(400).json({ error: "Those items don't match our current menu — refresh the page and try again." });
+  }
+  const subtotal = items.reduce((sum, it) => sum + it.price * it.qty, 0);
+  const tax = subtotal * TAX_RATE;
+  const total = subtotal + tax;
 
   const order = await withOrders(orders => {
     const record = {
@@ -248,13 +302,21 @@ app.post("/create-payment", async (req, res) => {
     return res.status(501).json({ error: "Payment isn't configured yet. Add STRIPE_SECRET_KEY in Render." });
   }
 
-  const { orderId, customerName, customerPhone, pickupTime, items, tax } = req.body;
-  if (!orderId || !Array.isArray(items)) {
-    return res.status(400).json({ error: "Missing order details." });
+  const { orderId } = req.body;
+  if (!orderId) {
+    return res.status(400).json({ error: "Missing order id." });
+  }
+
+  // Charge exactly what /orders already priced and saved — never re-price
+  // from the request, so this call can't be used to pay a different
+  // amount than the order that's shown on the Kitchen Display.
+  const order = loadOrders().find(o => o.id === orderId);
+  if (!order) {
+    return res.status(404).json({ error: "Order not found." });
   }
 
   try {
-    const line_items = items.map(it => ({
+    const line_items = order.items.map(it => ({
       price_data: {
         currency: "usd",
         product_data: { name: it.name },
@@ -262,9 +324,9 @@ app.post("/create-payment", async (req, res) => {
       },
       quantity: it.qty
     }));
-    if (tax > 0) {
+    if (order.tax > 0) {
       line_items.push({
-        price_data: { currency: "usd", product_data: { name: "Tax" }, unit_amount: Math.round(tax * 100) },
+        price_data: { currency: "usd", product_data: { name: "Tax" }, unit_amount: Math.round(order.tax * 100) },
         quantity: 1
       });
     }
@@ -274,7 +336,12 @@ app.post("/create-payment", async (req, res) => {
       line_items,
       success_url: `${SITE_URL}/?order=${encodeURIComponent(orderId)}&paid=1`,
       cancel_url: `${SITE_URL}/?order=${encodeURIComponent(orderId)}&cancelled=1`,
-      metadata: { orderId, customerName, customerPhone, pickupTime }
+      metadata: {
+        orderId,
+        customerName: order.customerName,
+        customerPhone: order.customerPhone,
+        pickupTime: order.pickupTime
+      }
     });
 
     res.json({ processUrl: session.url });
