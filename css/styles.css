@@ -666,8 +666,8 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .brand { font-size: 18px; flex: 1 1 auto; min-width: 0; }
   .brand-icon { height: 38px; width: 38px; }
   .header-status { display: none; }
-  .verify-order-link { display: none; }
-  .header-actions { gap: 10px; }
+  .verify-order-link { padding: 8px 11px; font-size: 12px; }
+  .header-actions { gap: 8px; }
   .cart-button { padding: 10px 14px; font-size: 13px; }
   .add-btn { width: 36px; height: 36px; font-size: 19px; }
   .qty-control button { width: 30px; height: 30px; font-size: 15px; }
