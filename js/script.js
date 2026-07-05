@@ -3,7 +3,6 @@
 
   const TAX_RATE = 0.115; // Puerto Rico IVU — adjust if your municipality differs
   const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  const DAY_LABELS = { sun: "Domingo", mon: "Lunes", tue: "Martes", wed: "Miércoles", thu: "Jueves", fri: "Viernes", sat: "Sábado" };
 
   /* ---------- state ---------- */
   // Cart lives in memory only (not localStorage) so it resets on reload.
@@ -20,17 +19,8 @@
     if (noteEl) noteEl.textContent = RESTAURANT.note || "";
     document.getElementById("pickupAddr").textContent = RESTAURANT.address.split(",")[0];
     document.getElementById("pickupPhone").textContent = RESTAURANT.phone;
-    document.getElementById("fullAddress").textContent = RESTAURANT.address;
     document.getElementById("footAddr").textContent = RESTAURANT.address;
     document.getElementById("footPhone").textContent = RESTAURANT.phone;
-
-    const table = document.getElementById("hoursTable");
-    table.innerHTML = DAY_KEYS.map(k => {
-      const h = RESTAURANT.hours[k];
-      const label = DAY_LABELS[k];
-      const text = h ? `${fmtTime(h.open)} – ${fmtTime(h.close)}` : "Cerrado";
-      return `<div style="display:flex; justify-content:space-between; max-width:280px;"><span>${label}</span><span>${text}</span></div>`;
-    }).join("");
 
     updateOpenStatus();
     setInterval(updateOpenStatus, 60000);
@@ -362,7 +352,6 @@
     closeDrawer();
     document.getElementById("checkoutSection").classList.add("open");
     document.getElementById("menu").style.display = "none";
-    document.getElementById("hoursSection").style.display = "none";
     document.querySelector(".hero").style.display = "none";
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -371,7 +360,6 @@
     document.getElementById("checkoutSection").classList.remove("open");
     document.getElementById("confirmSection").classList.remove("open");
     document.getElementById("menu").style.display = "";
-    document.getElementById("hoursSection").style.display = "";
     document.querySelector(".hero").style.display = "";
   }
 
