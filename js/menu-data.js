@@ -31,6 +31,24 @@ const MODIFIER_GROUPS = {
 
 const MENU = [
   {
+    // Promo combos from the menu — listed as "¡Desde $7.95!" (starting at),
+    // not individually priced there, so $7.95 is filled in as a starting
+    // point. Confirm/adjust per item if any cost more than the base price.
+    // Kept first in the menu — these are the most popular dishes.
+    category: "Mini Combos",
+    items: [
+      { id: "mc01", name: "Carne Ahumada", price: 7.95 },
+      { id: "mc02", name: "Pollo Al Ajillo", price: 7.95 },
+      { id: "mc03", name: "Pollo Naranja", price: 7.95 },
+      { id: "mc04", name: "Pollo Pepper", price: 7.95 },
+      { id: "mc05", name: "Pollo Agridulce", price: 7.95 },
+      { id: "mc06", name: "Carne Frita", price: 7.95 },
+      { id: "mc07", name: "Chuleta Frita", price: 7.95 },
+      { id: "mc08", name: "Pollo Frito", price: 7.95 },
+      { id: "mc09", name: "Pepper Steak", price: 7.95 }
+    ]
+  },
+  {
     category: "Aperitivos",
     items: [
       { no: 1,  id: "a01", name: "Egg Roll", price: 0.00 },
@@ -179,23 +197,6 @@ const MENU = [
       { no: 87, id: "d05", name: "Agua Embotella", price: 0.00 },
       { no: 88, id: "d06", name: "Refresco Lata", price: 0.00 },
       { no: 89, id: "d07", name: "Refresco Botella", price: 0.00 }
-    ]
-  },
-  {
-    // Promo combos from the menu — listed as "¡Desde $7.95!" (starting at),
-    // not individually priced there, so $7.95 is filled in as a starting
-    // point. Confirm/adjust per item if any cost more than the base price.
-    category: "Mini Combos",
-    items: [
-      { id: "mc01", name: "Carne Ahumada", price: 7.95 },
-      { id: "mc02", name: "Pollo Al Ajillo", price: 7.95 },
-      { id: "mc03", name: "Pollo Naranja", price: 7.95 },
-      { id: "mc04", name: "Pollo Pepper", price: 7.95 },
-      { id: "mc05", name: "Pollo Agridulce", price: 7.95 },
-      { id: "mc06", name: "Carne Frita", price: 7.95 },
-      { id: "mc07", name: "Chuleta Frita", price: 7.95 },
-      { id: "mc08", name: "Pollo Frito", price: 7.95 },
-      { id: "mc09", name: "Pepper Steak", price: 7.95 }
     ]
   }
 ];
