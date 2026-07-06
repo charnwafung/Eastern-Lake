@@ -13,7 +13,7 @@ const RESTAURANT = {
   // orders for the Kitchen Display and (once Stripe is set up)
   // starting a payment. Leave the placeholder in place until deployed.
   // Example once deployed: "https://easternlake-backend.onrender.com"
-  backendUrl: "https://eastern-lake.onrender.com",
+  backendUrl: "REPLACE_WITH_YOUR_RENDER_URL",
 
   // The PIN set on your backend as KITCHEN_PIN — put the same value
   // in the kitchen.html link, e.g. kitchen.html?pin=4821, and bookmark

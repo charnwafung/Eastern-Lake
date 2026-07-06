@@ -72,6 +72,15 @@
 
     board.innerHTML = orders.map(o => {
       const isUrgent = (Date.now() - new Date(o.createdAt).getTime()) > 20 * 60000;
+      const ageMs = Date.now() - new Date(o.createdAt).getTime();
+      let printBadge = "";
+      if (o.printed) {
+        printBadge = `<span class="print-status print-status-ok">Impresa</span>`;
+      } else if (ageMs > 60000) {
+        // Still not printed after a minute — likely the print agent is
+        // offline or the printer needs attention.
+        printBadge = `<span class="print-status print-status-warn">Sin imprimir</span>`;
+      }
       const itemsHtml = o.items.map(it => `
         <li><span><span class="qty">${it.qty}×</span>${it.name}</span><span>${fmtMoney(it.price * it.qty)}</span></li>
       `).join("");
@@ -84,6 +93,7 @@
           <div class="order-ticket-body">
             <div class="order-customer">${escapeHtml(o.customerName)}</div>
             <div class="order-meta">${escapeHtml(o.customerPhone)} · Recoger ${fmtPickupTime(o.pickupTime)}</div>
+            ${printBadge ? `<div style="margin: 6px 0;">${printBadge}</div>` : ""}
             <ul class="order-items">${itemsHtml}</ul>
             ${o.notes ? `<div class="order-notes">${escapeHtml(o.notes)}</div>` : ""}
             <div class="order-total">Total: ${fmtMoney(o.total)}</div>

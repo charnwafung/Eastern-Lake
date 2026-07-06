@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Eastern Lake — Ordena para recoger</title>
 <meta name="description" content="Ordena con anticipación para recoger. Cocina china, sabor de Puerto Rico.">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
@@ -22,7 +22,7 @@
     </a>
     <div class="header-actions">
       <span class="header-status" id="openStatus">Verificando horario…</span>
-      <a href="verificar.html" class="verify-order-link" id="headerVerifyOrder">Verificar orden</a>
+      <a href="#lookupSection" class="verify-order-link" id="headerVerifyOrder">Verificar orden</a>
       <button class="cart-button" id="openCart" aria-haspopup="dialog">
         Ordenar <span class="cart-count" id="cartCount">0</span>
       </button>
@@ -49,9 +49,20 @@
 
         <div class="hero-cta">
           <a href="#menu" class="btn-primary">Ver menú y ordenar</a>
-          <a href="horario.html" class="btn-ghost">Horario y ubicación</a>
+          <a href="#hoursSection" class="btn-ghost">Horario y ubicación</a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED DISHES ============ -->
+  <section class="featured-section">
+    <div class="wrap">
+      <div class="menu-heading">
+        <span class="eyebrow" style="color: var(--brass); justify-content: center; display: flex;">Platos destacados</span>
+        <h2 style="font-size: 28px; margin-top: 8px;">Algunos favoritos</h2>
+      </div>
+      <div class="featured-grid" id="featuredGrid"></div>
     </div>
   </section>
 
@@ -68,6 +79,35 @@
       <div class="ticket">
         <div class="ticket-body" id="menuBody"></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ HOURS / LOCATION ============ -->
+  <section id="hoursSection" style="padding: 40px 0 90px;">
+    <div class="wrap" style="max-width: 640px;">
+      <h2 style="font-size:24px; margin-bottom: 16px;">Horario y lugar para recoger</h2>
+      <div id="hoursTable" style="font-family: var(--font-mono); font-size: 14px; line-height: 2;"></div>
+      <p style="margin-top:16px; color: var(--ink-soft); font-size: 14px;" id="fullAddress"></p>
+    </div>
+  </section>
+
+  <!-- ============ ORDER LOOKUP ============ -->
+  <section id="lookupSection" style="padding: 0 0 90px;">
+    <div class="wrap" style="max-width: 480px;">
+      <h2 style="font-size: 22px; margin-bottom: 6px;">Verificar mi orden</h2>
+      <p style="color: var(--ink-soft); font-size: 13.5px; margin-bottom: 18px;">Ingresa tu número de orden y teléfono para ver el estado.</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="lookupOrderId">Número de orden</label>
+          <input type="text" id="lookupOrderId" placeholder="070326-01">
+        </div>
+        <div class="field">
+          <label for="lookupPhone">Teléfono</label>
+          <input type="tel" id="lookupPhone" placeholder="(787) 000-0000">
+        </div>
+      </div>
+      <button class="btn-primary" id="lookupBtn" style="width:100%;">Buscar</button>
+      <div id="lookupResult" style="margin-top: 20px;"></div>
     </div>
   </section>
 
@@ -129,7 +169,7 @@
       <p style="margin-top:28px; font-size:12.5px; max-width:52ch;">
         Esta confirmación es temporal mientras se completa la configuración del pago — en producción esta pantalla solo aparece después de que el pago sea aprobado.
       </p>
-      <a class="btn-ghost" id="goToLookupFromConfirm" href="verificar.html" style="margin-top: 24px; display: inline-block;">Verificar el estado más tarde</a>
+      <button class="btn-ghost" id="goToLookupFromConfirm" style="margin-top: 24px;">Verificar el estado más tarde</button>
     </div>
   </section>
 
@@ -171,7 +211,7 @@
   <div class="wrap">
     <span id="footAddr">—</span>
     <span id="footPhone">—</span>
-    <a href="verificar.html" style="color: inherit;">Verificar mi orden</a>
+    <a href="#lookupSection" style="color: inherit;">Verificar mi orden</a>
   </div>
 </footer>
 

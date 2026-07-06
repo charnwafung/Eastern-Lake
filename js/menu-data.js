@@ -29,25 +29,24 @@ const MODIFIER_GROUPS = {
   }
 };
 
+/* ============================================================
+   FEATURED DISHES
+   Shown in a highlight section on the homepage. Each entry just
+   references an item id from MENU above — name and price stay in
+   sync automatically.
+
+   To add a real photo later: drop the image file in img/dishes/
+   (any name) and set "image" to its path, e.g. "img/dishes/pollo-agridulce.jpg".
+   Leave "image" as null to keep showing the placeholder graphic.
+   ============================================================ */
+const FEATURED_DISHES = [
+  { itemId: "p05", image: null },
+  { itemId: "c02", image: null },
+  { itemId: "m03", image: null },
+  { itemId: "a06", image: null }
+];
+
 const MENU = [
-  {
-    // Promo combos from the menu — listed as "¡Desde $7.95!" (starting at),
-    // not individually priced there, so $7.95 is filled in as a starting
-    // point. Confirm/adjust per item if any cost more than the base price.
-    // Kept first in the menu — these are the most popular dishes.
-    category: "Mini Combos",
-    items: [
-      { id: "mc01", name: "Carne Ahumada", price: 7.95 },
-      { id: "mc02", name: "Pollo Al Ajillo", price: 7.95 },
-      { id: "mc03", name: "Pollo Naranja", price: 7.95 },
-      { id: "mc04", name: "Pollo Pepper", price: 7.95 },
-      { id: "mc05", name: "Pollo Agridulce", price: 7.95 },
-      { id: "mc06", name: "Carne Frita", price: 7.95 },
-      { id: "mc07", name: "Chuleta Frita", price: 7.95 },
-      { id: "mc08", name: "Pollo Frito", price: 7.95 },
-      { id: "mc09", name: "Pepper Steak", price: 7.95 }
-    ]
-  },
   {
     category: "Aperitivos",
     items: [
@@ -198,11 +197,22 @@ const MENU = [
       { no: 88, id: "d06", name: "Refresco Lata", price: 0.00 },
       { no: 89, id: "d07", name: "Refresco Botella", price: 0.00 }
     ]
+  },
+  {
+    // Promo combos from the menu — listed as "¡Desde $7.95!" (starting at),
+    // not individually priced there, so $7.95 is filled in as a starting
+    // point. Confirm/adjust per item if any cost more than the base price.
+    category: "Mini Combos",
+    items: [
+      { id: "mc01", name: "Carne Ahumada", price: 7.95 },
+      { id: "mc02", name: "Pollo Al Ajillo", price: 7.95 },
+      { id: "mc03", name: "Pollo Naranja", price: 7.95 },
+      { id: "mc04", name: "Pollo Pepper", price: 7.95 },
+      { id: "mc05", name: "Pollo Agridulce", price: 7.95 },
+      { id: "mc06", name: "Carne Frita", price: 7.95 },
+      { id: "mc07", name: "Chuleta Frita", price: 7.95 },
+      { id: "mc08", name: "Pollo Frito", price: 7.95 },
+      { id: "mc09", name: "Pepper Steak", price: 7.95 }
+    ]
   }
 ];
-
-// Also usable from Node (the backend requires this same file so order
-// prices are computed from one authoritative menu, not sent by the browser).
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { MENU, MODIFIER_GROUPS };
-}

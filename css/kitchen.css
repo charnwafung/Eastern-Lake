@@ -138,7 +138,21 @@ body.kitchen-body {
   font-size: 14px;
 }
 .order-done-btn:hover { background: var(--jade-soft); }
+.order-done-btn:active { background: var(--jade-soft); transform: scale(0.97); }
 .order-done-btn:disabled { opacity: 0.5; }
+
+.print-status {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+.print-status-ok { background: rgba(124,148,129,0.18); color: #4E6E53; }
+.print-status-warn { background: rgba(166,58,46,0.14); color: var(--chili); }
 
 .pin-gate {
   min-height: 100vh;
