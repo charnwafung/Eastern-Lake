@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verificar orden — Eastern Lake</title>
-<meta name="description" content="Verifica el estado de tu orden para recoger en Eastern Lake.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Verificar mi orden — Eastern Lake</title>
+<meta name="description" content="Verifica el estado de tu orden en Eastern Lake, Restaurante Chino.">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="img/favicon-512.png">
 <link rel="apple-touch-icon" href="img/favicon-180.png">
@@ -16,22 +16,24 @@
 
 <header class="site-header">
   <div class="wrap">
-    <a href="index.html" class="brand" id="brandName">
+    <a href="index.html" class="brand">
       <img src="img/logo-icon.png" alt="" class="brand-icon">
       <span class="brand-text">Eastern Lake<span class="brand-tagline">Restaurante Chino</span></span>
     </a>
     <div class="header-actions">
-      <a href="index.html" class="verify-order-link">Volver al menú</a>
+      <span class="header-status" id="openStatus">Verificando horario…</span>
+      <a href="index.html" class="cart-button" style="text-decoration:none; display:inline-block;">Ordenar</a>
     </div>
   </div>
 </header>
 
 <main>
-  <section id="lookupSection" style="padding: 56px 0 90px;">
+  <section style="padding: 56px 0 90px;">
     <div class="wrap" style="max-width: 480px;">
-      <span class="eyebrow">Estado de tu orden</span>
-      <h1 style="font-family: var(--font-display); font-size: 28px; margin: 10px 0 6px;">Verificar mi orden</h1>
-      <p style="color: var(--ink-soft); font-size: 13.5px; margin-bottom: 18px;">Ingresa tu número de orden y teléfono para ver el estado.</p>
+      <span class="eyebrow" style="color: var(--chili);">Estado de la orden</span>
+      <h1 style="font-family: var(--font-display); font-size: 30px; margin: 10px 0 8px;">Verificar mi orden</h1>
+      <p style="color: var(--ink-soft); font-size: 13.5px; margin-bottom: 24px;">Ingresa tu número de orden y teléfono para ver el estado.</p>
+
       <div class="field-row">
         <div class="field">
           <label for="lookupOrderId">Número de orden</label>
@@ -52,11 +54,11 @@
   <div class="wrap">
     <span id="footAddr">—</span>
     <span id="footPhone">—</span>
-    <a href="index.html" style="color: inherit;">Volver al menú</a>
+    <a href="horario.html" style="color: inherit;">Horario y ubicación</a>
   </div>
 </footer>
 
 <script src="js/config.js"></script>
-<script src="js/lookup.js"></script>
+<script src="js/verificar.js"></script>
 </body>
 </html>

@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Horario y ubicación — Eastern Lake</title>
-<meta name="description" content="Horario y lugar para recoger tu orden en Eastern Lake.">
+<meta name="description" content="Horario y lugar para recoger tu orden en Eastern Lake, Restaurante Chino.">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="img/favicon-512.png">
 <link rel="apple-touch-icon" href="img/favicon-180.png">
@@ -16,25 +16,30 @@
 
 <header class="site-header">
   <div class="wrap">
-    <a href="index.html" class="brand" id="brandName">
+    <a href="index.html" class="brand">
       <img src="img/logo-icon.png" alt="" class="brand-icon">
       <span class="brand-text">Eastern Lake<span class="brand-tagline">Restaurante Chino</span></span>
     </a>
     <div class="header-actions">
-      <a href="index.html" class="verify-order-link">Volver al menú</a>
+      <span class="header-status" id="openStatus">Verificando horario…</span>
+      <a href="verificar.html" class="verify-order-link">Verificar orden</a>
+      <a href="index.html" class="cart-button" style="text-decoration:none; display:inline-block;">Ordenar</a>
     </div>
   </div>
 </header>
 
 <main>
-  <section id="hoursSection" style="padding: 56px 0 90px;">
+  <section style="padding: 56px 0 90px;">
     <div class="wrap" style="max-width: 640px;">
-      <span class="eyebrow">Horario y ubicación</span>
-      <h1 style="font-family: var(--font-display); font-size: 28px; margin: 10px 0 16px;">Horario y lugar para recoger</h1>
-      <div id="hoursTable" style="font-family: var(--font-mono); font-size: 14px; line-height: 2;"></div>
-      <p style="margin-top:20px; color: var(--ink-soft); font-size: 14px;" id="fullAddress"></p>
-      <p style="margin-top:6px; color: var(--ink-soft); font-size: 14px;" id="fullPhone"></p>
-      <p style="margin-top:14px; color: var(--ink-soft); font-size: 13px;" id="pickupNote"></p>
+      <span class="eyebrow" style="color: var(--chili);">Horario y ubicación</span>
+      <h1 style="font-family: var(--font-display); font-size: 32px; margin: 10px 0 24px;">¿Dónde y cuándo recoger?</h1>
+
+      <div id="hoursTable" style="font-family: var(--font-mono); font-size: 14px; line-height: 2; margin-bottom: 24px;"></div>
+
+      <p style="color: var(--ink-soft); font-size: 14px; margin-bottom: 4px;" id="fullAddress"></p>
+      <p style="color: var(--ink-soft); font-size: 14px; margin-bottom: 28px;" id="fullPhone"></p>
+
+      <a href="index.html" class="btn-primary" style="display:inline-block; text-decoration:none;">Ver menú y ordenar</a>
     </div>
   </section>
 </main>
@@ -43,11 +48,11 @@
   <div class="wrap">
     <span id="footAddr">—</span>
     <span id="footPhone">—</span>
-    <a href="index.html" style="color: inherit;">Volver al menú</a>
+    <a href="verificar.html" style="color: inherit;">Verificar mi orden</a>
   </div>
 </footer>
 
 <script src="js/config.js"></script>
-<script src="js/hours.js"></script>
+<script src="js/horario.js"></script>
 </body>
 </html>
